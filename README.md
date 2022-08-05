@@ -30,3 +30,12 @@ docker run olelarsen/ganache
 docker run olelarsen/truffle
 docker run olelarsen/hardhat
 ````
+
+# build your own!:
+````
+docker build  --target=ganache -t ganache .
+docker build  --target=truffle -t truffle .
+docker build  --target=hardhat -t hardhat .
+
+docker-compose -f docker-compose.own.yml up -d --build
+```

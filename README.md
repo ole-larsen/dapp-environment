@@ -25,6 +25,7 @@ docker build  --target=hardhat -t olelarsen/hardhat .
 docker-compose up -d --build
 ````
 # run separate:
+````
 docker run olelarsen/ganache
 docker run olelarsen/truffle
 docker run olelarsen/hardhat

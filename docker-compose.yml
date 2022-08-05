@@ -1,0 +1,31 @@
+version: "3.6"
+services:
+  ganache:
+    image: olelarsen/ganache
+    container_name: ganache
+    ports:
+      - 8545:8545
+    networks:
+      - web
+  truffle:
+    image: olelarsen/truffle
+    container_name: truffle
+    stdin_open: true
+    tty: true
+    depends_on:
+      - ganache
+    networks:
+      - web
+  hardhat:
+    image: olelarsen/hardhat
+    container_name: hardhat
+    stdin_open: true
+    tty: true
+    depends_on:
+      - ganache
+    networks:
+      - web
+networks:
+  web:
+    name: web
+    driver: bridge

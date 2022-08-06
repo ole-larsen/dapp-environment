@@ -4,8 +4,8 @@ FROM node:alpine as build
 # Maintainer
 MAINTAINER Ole Larssen <ole.larssen777@gmail.com>
 
-# Install container dependencies
-RUN apk add --update --no-cache nodejs npm build-base python3 py3-pip
+# Install container dependencies: gcompat + libc6-compat for fix missing ld-linux-x86-64.so.2: on Alpine Linux
+RUN apk add --update --no-cache nodejs npm build-base python3 py3-pip curl libstdc++ gcompat libc6-compat gcompat
 
 FROM build as ganache
 RUN npm install -g ganache

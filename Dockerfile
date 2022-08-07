@@ -9,15 +9,16 @@ RUN apk add --update --no-cache nodejs npm build-base python3 py3-pip curl libst
 
 FROM build as ganache
 RUN npm install -g ganache
+WORKDIR /ganache
 EXPOSE 8545
 ENTRYPOINT ["ganache", "-h", "0.0.0.0"]
 
 FROM build as truffle
-RUN npm install -g truffle
+RUN npm install -g truffle --unsafe-perm=true --allow-root
 WORKDIR /truffle
 # Startup script
-RUN printf "%s\n" "#!/bin/sh" "set -e" "if [ ! -f truffle-config.js ]; then" "  truffle init" "fi" "exec truffle-entrypoint" > truffle-entrypoint.sh && mv truffle-entrypoint.sh /usr/local/bin/truffle-entrypoint
-RUN chmod +x /usr/local/bin/truffle-entrypoint
+RUN printf "%s\n" "#!/bin/sh" "set -e" "if [ ! -d $(pwd)/init ]; then" "  truffle version && mkdir -p $(pwd)/init && cd $(pwd)/init && truffle init" "fi" "exec truffle-entrypoint" > truffle-entrypoint.sh && mv truffle-entrypoint.sh /usr/local/bin/truffle-entrypoint
+RUN mkdir /.config && chmod -R 777 /.config && chmod +x /usr/local/bin/truffle-entrypoint
 ENTRYPOINT ["truffle-entrypoint"]
 
 FROM build as hardhat

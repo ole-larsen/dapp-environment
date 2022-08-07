@@ -1,8 +1,4 @@
-contracts
-MetaCoin
-migrations
-test
-truffle-config.js
+source
 .DS_Store
 .idea
 

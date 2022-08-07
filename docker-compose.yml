@@ -3,6 +3,8 @@ services:
   ganache:
     image: olelarsen/ganache
     container_name: ganache
+    volumes:
+      - ./source/ganache:/ganache
     ports:
       - 8545:8545
     networks:
@@ -14,6 +16,10 @@ services:
     tty: true
     depends_on:
       - ganache
+    volumes:
+      - ./source/truffle:/truffle
+    ports:
+      - 3000:3000
     networks:
       - web
   hardhat:
@@ -23,6 +29,8 @@ services:
     tty: true
     depends_on:
       - ganache
+    volumes:
+      - ./source/hardhat:/hardhat
     networks:
       - web
 networks:
